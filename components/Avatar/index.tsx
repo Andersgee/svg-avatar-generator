@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-//import Kek from "public/15.svg";
 import { generator } from "lib/generator";
 
 function svgObjectUrl(svg: string) {
@@ -11,7 +10,7 @@ function svgObjectUrl(svg: string) {
 }
 
 export default function Avatar() {
-  const svgString = generator();
+  const [svgString, setSvgstring] = useState(() => generator());
   const [url, setUrl] = useState("");
 
   useEffect(() => {
@@ -19,11 +18,17 @@ export default function Avatar() {
     setUrl(objectUrl);
   }, [svgString]);
 
+  const getface = () => {
+    setSvgstring(generator());
+  };
+
   return (
     <div>
-      <div>{svgString}</div>
-      {/* eslint-disable-next-line @next/next/no-img-element*/}
-      <img src={url} alt="some svg" />
+      <div>
+        {/* eslint-disable-next-line @next/next/no-img-element*/}
+        <img src={url} alt="some svg" />
+      </div>
+      <button onClick={getface}>get random face</button>
     </div>
   );
 }
