@@ -1,23 +1,50 @@
-import Matercolor from "matercolors";
+import Please from "pleasejs/dist/Please";
 
-const randomColor = () => Math.floor(Math.random() * 16777215).toString(16);
+const randomColor = () =>
+  `#${Math.floor(Math.random() * 16777215).toString(16)}`;
 const rand = (a: number, b: number) => a + Math.random() * (b - a);
 
 export function generator() {
-  const c = new Matercolor(randomColor());
-  //console.log(c);
-  const x = 10;
+  const hue = Math.random() * 255;
+  const mono = Please.make_scheme(
+    {
+      h: hue,
+      s: 0.8,
+      v: 0.5,
+    },
+    {
+      scheme_type: "monochromatic",
+      format: "hex",
+    }
+  ) as string[];
+
+  const splitcomp = Please.make_scheme(
+    {
+      h: hue,
+      s: 0.8,
+      v: 0.5,
+    },
+    {
+      scheme_type: "split-complementary",
+      format: "hex",
+    }
+  ) as string[];
+
+  console.log("PLEASE COLORS, mono:", mono);
+  console.log("PLEASE COLORS, splitcomp:", splitcomp);
+  const x = 5;
   const p: Face = {
-    headFill: c["200"],
-    eyeFill: c["A1900"],
-    eyebrowFill: c["A1700"],
-    mouthFill: c["A1400"],
+    headFill: mono[4],
+    eyeFill: mono[0],
+    eyebrowFill: mono[2],
+    mouthFill: mono[1],
     eyebrowX: rand(-x, x),
     eyebrowX2: rand(-x, x),
+    eyebrowY: rand(-x, x),
     eyeX: rand(-x, x),
     jawX: rand(-x, x),
     cheekboneX: rand(-x, x),
-    chinX: rand(-x, x),
+    chinX: rand(-x, x) * 2,
     headRadius: rand(-x, x),
   };
   return face(p);
@@ -28,6 +55,7 @@ interface Face {
   eyeX: number;
   eyebrowX: number;
   eyebrowX2: number;
+  eyebrowY: number;
   cheekboneX: number;
   chinX: number;
   jawX: number;
@@ -36,11 +64,11 @@ interface Face {
   eyebrowFill: string;
   mouthFill: string;
 }
-
+//<rect fill="#09042A" x="0" y="0" width="100%" height="100%"/>
 const face = (p: Face) => {
   return `
 <svg width="320" height="320" viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg">
-<rect fill="#09042A" x="0" y="0" width="100%" height="100%"/> 
+
 <g transform="translate(160,120)">
   <!-- head -->
   <path fill="${p.headFill}"
@@ -58,32 +86,32 @@ const face = (p: Face) => {
 
   <!-- eye -->
   <path fill="${p.eyeFill}"
-  d="M ${20 + p.eyeX} 40
+  d="M ${20 + p.eyebrowX} 40
   a 50 50 0 0 1 50 0
   a 120 120 0 0 1 -50 0
   " />
 
   <!-- other eye -->
   <path fill="${p.eyeFill}" transform="scale(-1,1)"
-  d="M ${20 + p.eyeX} 40
+  d="M ${20 + p.eyebrowX} 40
   a 50 50 0 0 1 50 0
   a 120 120 0 0 1 -50 0
   " />
 
   <!-- eye brow -->
   <path fill="none" stroke="${p.eyebrowFill}" stroke-width="5"
-  d="M ${20 + p.eyebrowX} 20
-  L ${60 + p.eyebrowX2} 10
-  L 70 20
+  d="M ${20 + p.eyebrowX} ${20 + p.eyebrowY}
+  L ${60 + p.eyebrowX2} ${10 + p.eyebrowY}
+  L 70 ${20 + p.eyebrowY}
   " />
 
   <!-- other eye brow -->
   <path fill="none" stroke="${
     p.eyebrowFill
   }" stroke-width="5" transform="scale(-1,1)"
-  d="M ${20 + p.eyebrowX} 20
-  L ${60 + p.eyebrowX2} 10
-  L 70 20
+  d="M ${20 + p.eyebrowX} ${20 + p.eyebrowY}
+  L ${60 + p.eyebrowX2} ${10 + p.eyebrowY}
+  L 70 ${20 + p.eyebrowY}
   " />
 
   <!-- nose -->
