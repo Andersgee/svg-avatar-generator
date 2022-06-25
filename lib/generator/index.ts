@@ -1,6 +1,4 @@
-//import Please from "pleasejs/dist/Please";
-import { monochromaticScheme } from "./color";
-import { Yxy2srgb, rgb2Yxy, Yxy2rgb, Triplet } from "./colorspace";
+import { rgb2Yxy, Yxy2rgb, Triplet } from "./colorspace";
 
 const randomColor = () =>
   `#${Math.floor(Math.random() * 16777215).toString(16)}`;
