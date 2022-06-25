@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { generator } from "lib/generator";
+import { generator, randomParams, randomFill } from "lib/generator";
+import Test from "public/test.svg";
 
 function svgObjectUrl(svg: string) {
   return URL.createObjectURL(
@@ -10,16 +11,27 @@ function svgObjectUrl(svg: string) {
 }
 
 export default function Avatar() {
-  const [svgString, setSvgstring] = useState(() => generator());
   const [url, setUrl] = useState("");
+
+  const [fill, setFill] = useState(randomFill());
+  const [params, setParams] = useState(randomParams());
+  const [svgString, setSvgstring] = useState(() => generator(params, fill));
 
   useEffect(() => {
     const objectUrl = svgObjectUrl(svgString);
     setUrl(objectUrl);
   }, [svgString]);
 
+  useEffect(() => {
+    setSvgstring(generator(params, fill));
+  }, [params, fill]);
+
   const getface = () => {
-    setSvgstring(generator());
+    setParams(randomParams());
+  };
+
+  const getcolor = () => {
+    setFill(randomFill());
   };
 
   return (
@@ -28,7 +40,11 @@ export default function Avatar() {
         {/* eslint-disable-next-line @next/next/no-img-element*/}
         <img src={url} alt="some svg" />
       </div>
-      <button onClick={getface}>get random face</button>
+      <button onClick={getface}>new shape</button>
+      <button onClick={getcolor}>new color</button>
+      <div>
+        <Test />
+      </div>
     </div>
   );
 }

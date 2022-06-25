@@ -1,13 +1,8 @@
 import type { NextPage } from "next";
+import Mosaic from "components/Mosaic";
 
-import Avatar from "components/Avatar";
-
-const Home: NextPage = () => {
-  return (
-    <div style={{ display: "flex", justifyContent: "center" }}>
-      <Avatar />
-    </div>
-  );
+const Page: NextPage = () => {
+  return <Mosaic />;
 };
 
-export default Home;
+export default Page;
