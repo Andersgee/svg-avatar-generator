@@ -1,8 +1,13 @@
 import type { NextPage } from "next";
-import Mosaic from "components/Mosaic";
+
+import Avatar from "components/Avatar";
 
 const Page: NextPage = () => {
-  return <Mosaic />;
+  return (
+    <div style={{ display: "flex", justifyContent: "center" }}>
+      <Avatar />
+    </div>
+  );
 };
 
 export default Page;

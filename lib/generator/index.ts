@@ -1,4 +1,15 @@
 import { rgb2Yxy, Yxy2rgb, Triplet } from "./colorspace";
+import { sanitize } from "./sanitize";
+
+export function randomAvatarSvgString() {
+  const p = randomParams();
+  const f = randomFill();
+  return generator(p, f);
+}
+
+export function generator(p: Params, f: Fill) {
+  return sanitize(face(p, f));
+}
 
 const randomColor = () =>
   `#${Math.floor(Math.random() * 16777215).toString(16)}`;
@@ -105,16 +116,6 @@ export function randomFill() {
   return f;
 }
 
-export function generator(p: Params, f: Fill) {
-  return face(p, f);
-}
-
-export function randomAvatarSvgString() {
-  const p = randomParams();
-  const f = randomFill();
-  return face(p, f);
-}
-
 interface Fill {
   eyeFill: string;
   headFill: string;
@@ -186,20 +187,6 @@ const face = (p: Params, f: Fill) => {
   " />
 
   <!-- mouth -->
-  <!--
-  <path fill="none" stroke="${f.mouthFill}" stroke-width="2"
-  d="M 0 ${130 + p.mouthY}
-  m -30 0
-  a 70 70 0 0 0 65 -5
-  a 100 100 0 0 0 -30 -5
-  l -5 2
-  l -5 -2
-  a 100 100 0 0 0 -25 10
-  a 200 200 0 0 0 65 -5
-  "
-  />
-  -->
-
   <path fill="${f.mouthFill}" stroke="${f.mouthFill}" stroke-width="5"
   stroke-linejoin="miter"
   d="M 0 ${130 + p.mouthY}

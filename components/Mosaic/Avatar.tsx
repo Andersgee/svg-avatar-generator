@@ -14,5 +14,5 @@ export default function Avatar() {
   useEffect(() => setUrl(svgObjectUrl(randomAvatarSvgString())), []);
 
   /* eslint-disable-next-line @next/next/no-img-element*/
-  return <img src={url} alt="avatar" />;
+  return <img src={url} alt="" />;
 }

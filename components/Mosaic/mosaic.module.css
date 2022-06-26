@@ -1,5 +1,12 @@
+.container {
+  display: flex;
+  justify-content: center;
+}
+
 .mosaic {
   display: grid;
+  width: 1000px;
+  max-width: 100%;
   /*grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));*/
   grid-template-columns: repeat(auto-fit, 48px);
   gap: 16px;

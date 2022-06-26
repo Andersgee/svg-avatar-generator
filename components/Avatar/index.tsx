@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { generator, randomParams, randomFill } from "lib/generator";
-import Test from "public/test.svg";
+//import Test from "public/test.svg";
 
 function svgObjectUrl(svg: string) {
   return URL.createObjectURL(
@@ -38,13 +38,10 @@ export default function Avatar() {
     <div>
       <div>
         {/* eslint-disable-next-line @next/next/no-img-element*/}
-        <img src={url} alt="some svg" />
+        <img src={url} alt="avatar" />
       </div>
       <button onClick={getface}>new shape</button>
       <button onClick={getcolor}>new color</button>
-      <div>
-        <Test />
-      </div>
     </div>
   );
 }
