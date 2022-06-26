@@ -19,6 +19,7 @@ interface Params {
   jawX: number;
   noseY: number;
   mouthY: number;
+  mouthW: number;
   eyeIsOpen: number;
   eyeBrowLiftR: number;
   eyeBrowLiftL: number;
@@ -37,6 +38,7 @@ export function randomParams(x = 5) {
     headRadius: rand(-x, x),
     noseY: rand(-x, x) * 0.5,
     mouthY: rand(-x, x) * 0.5,
+    mouthW: rand(-x, x) * 2,
     eyeIsOpen: randIntbool(),
     eyeBrowLiftR: rand(-4, 4),
     eyeBrowLiftL: rand(-4, 4),
@@ -120,25 +122,6 @@ interface Fill {
   mouthFill: string;
 }
 
-interface Face {
-  headRadius: number;
-  eyeX: number;
-  eyebrowX: number;
-  eyebrowX2: number;
-  eyebrowY: number;
-  cheekboneX: number;
-  chinX: number;
-  jawX: number;
-  eyeFill: string;
-  headFill: string;
-  eyebrowFill: string;
-  mouthFill: string;
-  noseY: number;
-  mouthY: number;
-  eyeIsOpen: number;
-  eyeBrowLiftR: number;
-  eyeBrowLiftL: number;
-}
 //<rect fill="#09042A" x="0" y="0" width="100%" height="100%"/>
 const face = (p: Params, f: Fill) => {
   return `
@@ -192,7 +175,7 @@ const face = (p: Params, f: Fill) => {
   " />
 
   <!-- nose -->
-  <path fill="none" stroke="${f.mouthFill}" stroke-width="2"
+  <path fill="none" stroke="${f.mouthFill}" stroke-width="5"
   d="M 0 ${100 + p.noseY}
   m -5 -5
   a 6 6 0 0 0 10 0
@@ -203,6 +186,7 @@ const face = (p: Params, f: Fill) => {
   " />
 
   <!-- mouth -->
+  <!--
   <path fill="none" stroke="${f.mouthFill}" stroke-width="2"
   d="M 0 ${130 + p.mouthY}
   m -30 0
@@ -214,6 +198,21 @@ const face = (p: Params, f: Fill) => {
   a 200 200 0 0 0 65 -5
   "
   />
+  -->
+
+  <path fill="${f.mouthFill}" stroke="${f.mouthFill}" stroke-width="5"
+  stroke-linejoin="miter"
+  d="M 0 ${130 + p.mouthY}
+  m -${35 + p.mouthW} 0
+  a 70 70 0 0 0 ${70 + 2 * p.mouthW} 0
+  a ${100 + p.mouthW} ${100 + p.mouthW} 0 0 0 -${30 + p.mouthW} -3
+  l -5 2
+  l -5 -2
+  a ${100 + p.mouthW} ${100 + p.mouthW} 0 0 0 -${30 + p.mouthW} 3
+  a 70 70 0 0 0 ${70 + 2 * p.mouthW} 0
+  "
+  />
+
 </g>
 
 </svg>
